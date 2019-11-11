@@ -11,7 +11,7 @@
 #DEBUG_URL=${MAIN_URL/\/debian\//\/debian-debug\/}
 #DEBUG_URL=${DEBUG_URL/_/-dbgsym_}
 
-DEBUG_URL=http://cdn-fastly.deb.debian.org/debian-debug/$1
+DEBUG_URL=http://cdn-fastly.deb.debian.org/debian-debug/pool/main/$1
 MAIN_URL=${DEBUG_URL/-debug\//\/}
 MAIN_URL=${MAIN_URL/-dbgsym_/_}
 

@@ -45,15 +45,19 @@ def awesome_error(msg, **kwargs):
 def doit_raw(pkg_name, elf_path, dbg_path):
     with catcher(f"ELF_OPEN_FAIL: elf={elf_path} pkg={pkg_name}"):
         elf = angr.Project(elf_path, auto_load_libs=False)
+        awesome_info(f"ELF_OPEN_SUCCESS: elf={elf_path} pkg={pkg_name}")
 
     with catcher(f"DBG_OPEN_FAIL: dbg={dbg_path} pkg={pkg_name}"):
         dbg = angr.Project(dbg_path, auto_load_libs=False)
+        awesome_info(f"DBG_OPEN_SUCCESS: elf={elf_path} pkg={pkg_name}")
 
     with catcher(f"SYMBOLS_FAIL: elf={elf_path} dbg={dbg_path} pkg={pkg_name}"):
         symbols = [ (s.name, s.rebased_addr) for s in dbg.loader.symbols if not s.is_import and s.is_function ]
+        awesome_info(f"SYMBOLS_SUCCESS: elf={elf_path} pkg={pkg_name}")
 
     with catcher(f"CFG_FAIL: elf={elf_path} pkg={pkg_name}"):
         cfg = elf.analyses.CFG(data_references=True, cross_references=True)
+        awesome_info(f"CFG_SUCCESS: elf={elf_path} pkg={pkg_name}")
 
     l.info("Checking functions...")
     for i,(s,a) in enumerate(symbols):
